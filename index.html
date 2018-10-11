@@ -62,6 +62,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Dockerize-Mongo-and-Nodejs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/" class="article-date">
+  <time datetime="2018-10-11T09:56:10.000Z" itemprop="datePublished">2018-10-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/">Dockerize Mongo and Nodejs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome the first technical article of the Voyage programme. Today, let’s talk about Node.js and Mongo DB. </p>
+<h2 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h2><p>Node.js provide javascript the capability to be a backend language, and a very good one. Unlike the java language’s dependency and package management mechanism evolved from ant, maven, graddle, Node.js have the npm as package managemer from day 1, and it’s very handy and easy to use. Which makes node.js very easy to start.</p>
+<h3 id="Guides"><a href="#Guides" class="headerlink" title="Guides"></a>Guides</h3><p>Best documentation so far I found is the <a href="https://nodejs.org/en/docs/" target="_blank" rel="noopener">Offical documentation</a>, which has very nice start up <a href="https://nodejs.org/en/docs/guides/" target="_blank" rel="noopener">Guides</a>.<br>Although I got most of the knowledge from the website above, I still want to write some words about my understanding, it can also served as appetizer before you dive in to the official documentations.</p>
+<h4 id="Development-tools"><a href="#Development-tools" class="headerlink" title="Development tools."></a>Development tools.</h4><p>In my early days of java programming, javascript was embed in JSP to do some UI side logic, like validation, alerts etc. In those days javascript was not considered a real programming language. You don’t have a dedicated IDE ( although you don’t really need one), there is no way to debug ( I used to alert step by step to debug). But these days, javascript has been well developed that it’s almost de facto standard language for front end, node.js makes it a very handy backend language. You got debug tool that naturally ready for remote debug. you can even profiling the node.js process for performance tuning, and containerizing. Because it’s new, it stands on the shoulder of old ones, it has all the goodies built in naturally, while avoiding designs that proved by the old ones to be bad.</p>
+<h4 id="Call-backs"><a href="#Call-backs" class="headerlink" title="Call backs."></a>Call backs.</h4><p>Because javascipt is a scripting language, it allows functions to be passed as parameter. Which enables call-back mechanism.  Call-back is one of the ways to achieve IoC, which used to decouple between different models. Java rely on Spring for the same purpose.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">    res.status(err.status || <span class="number">500</span>);</span><br><span class="line">    res.render(<span class="string">'error'</span>, &#123;</span><br><span class="line">        message: err.message,</span><br><span class="line">        error: err</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>From coding perspective, the call-back style is the biggest difference I feel comparing to Java. it’s not just about how you type the code, it actually requires different way of logic think, in Java(and many other language) you write code line by line, and expecting it runs from top to bottom, like flow.  With call-back style, it’s more OO, basically you operate on objects, and assign new feature to an object by just passing certain function as parameter, which requires you not think programming as code line by line, you should think in objects and behaviors.</p>
+<h2 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h2><p>Mongo got different titles, No-SQL, document DB, Object DB. I would prefer to consider it as a JSON db.<br>Database, as core backend for any application, can be a very big topic. I would rather leave it to DBAs, I’m a programmer, so I’m not going talk much about the DB part of it. What I would like to say is, just couple of days ago, I heard that there is a system has been running for more than 30 years, serving millions citizen of New Zealand. And the system was built one something called IMS, if you google it, you will find “The IMS Database component stores data using a hierarchical model.”. This hierarchical model, fundamentally, is the same model like JSON, although IMS might store things in binary, but JSON store it in string. This brings me the question that why javascript is prosperous these days, while IMS is sunsetting. If you compare IMS with modern technology, you probably will found IMS does better than modern ones in many aspect, in terms of stability, transactional, data integrity, performance. Then why there are less and less users? I think it could be caused by<br>1 IMS as an IBM product, it’s not open enough, that customer used to pay huge amount of money to service providers. It seems it was the way how technical companies make money.<br>2 Technically, the system might be powerful, but it might not friendly for both developer and user.  Does this mean usability could be the most important factor for whether a system can succeed or not?</p>
+<h2 id="Dockerize"><a href="#Dockerize" class="headerlink" title="Dockerize"></a>Dockerize</h2><p>### </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjn4ha6we0000okvowp9wquyt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Principles" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Voyage/2018/10/11/Principles/" class="article-date">
@@ -109,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn4e4riq0000w4voy77upbhd" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn4ha6xc0002okvofjsug5fr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -157,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn4e4rj50001w4vocdvopymh" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn4ha6zv0003okvofsbg75n9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -202,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/hello-world/" data-id="cjn4e4rj70002w4vof3xo525e" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/hello-world/" data-id="cjn4ha6wt0001okvoibc8emxj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -241,6 +285,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/">Dockerize Mongo and Nodejs</a>
+          </li>
         
           <li>
             <a href="/Voyage/2018/10/11/Principles/">Principles</a>
