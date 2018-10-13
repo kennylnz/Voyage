@@ -96,14 +96,14 @@
 <p>the first time might be slow as you need pull the hadoop image.</p>
 <p>run a container<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it -p 8088:8088 -p 8042:8042 -p 4040:4040 -h sandbox voyage/spark:2.3.2 bash</span><br></pre></td></tr></table></figure></p>
 <p>Run the yarn client to verify, within the container. please ensure you have enough memory for your container(container os, hadoop &amp; spark)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash-4.1<span class="comment"># spark-shell --master yarn --deploy-mode client --driver-memory 1g --executor-memory 1g --executor-cores 1</span></span><br></pre></td></tr></table></figure></p>
-<p>you should be able to see<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">Using Scala version 2.11.8 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_51)</span><br><span class="line">Type <span class="keyword">in</span> expressions to have them evaluated.</span><br><span class="line">Type :<span class="built_in">help</span> <span class="keyword">for</span> more information.</span><br><span class="line">scala&gt;</span><br></pre></td></tr></table></figure></p>
+<p>you should be able to see<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  <span class="string">'_/</span></span><br><span class="line"><span class="string">   /___/ .__/\_,_/_/ /_/\_\   version 2.3.2</span></span><br><span class="line"><span class="string">      /_/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Using Scala version 2.11.8 (OpenJDK 64-Bit Server VM, Java 1.8.0_181)</span></span><br><span class="line"><span class="string">Type in expressions to have them evaluated.</span></span><br><span class="line"><span class="string">Type :help for more information.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">scala&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>now you can run some scala script</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; sc.parallelize(<span class="number">1</span> to <span class="number">1000</span>).count()</span><br><span class="line">res0: <span class="type">Long</span> = <span class="number">1000</span>                                                               </span><br><span class="line">scala&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; sc.parallelize(<span class="number">1</span> to <span class="number">1000</span>).count()</span><br><span class="line">res0: <span class="type">Long</span> = <span class="number">1000</span>                                                      </span><br><span class="line">scala&gt;</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjn6x7vsj0001v0vo62zsnip5" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjn6xmbo50001p0voyiebkiba" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjn6x7vs70000v0vok35yddah" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjn6xmbnu0000p0vord1bltrc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -224,7 +224,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn6x7vsp0002v0vobo4iovr8" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn6xmbod0003p0vo5ky5w7d0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -272,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn6x7vsr0003v0vo5r2l5vxv" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn6xmboa0002p0voqcl2gakx" class="article-share-link">Share</a>
       
       
     </footer>
