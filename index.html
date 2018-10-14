@@ -94,15 +94,15 @@
 <p>Couple of points to explain. The AWS.config.update part set up connection info to the Dynamo DB. Region and endpoint can be found from <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#ddb_region" target="_blank" rel="noopener">Amazon DynamoDB Regions</a>.<br>accessKeyId and secretAccessKey is the one you got from the “AWS keys” section. This application is for learning purpose, so we just hard coded the key. You can’t use it for production application as Javascript runs in browser, you will leak your keys, and there is chance that you might get huge bills from AWS if someone use your key to do something good. The suggested solution by Amazon is “Cognito”.</p>
 <p>If you open the HTML and click the button, you will get your table created. Simple as that!<br>I will skip the rest of steps in the Amazon tutorial,as it pretty straight forward.</p>
 <h2 id="My-feeling"><a href="#My-feeling" class="headerlink" title="My feeling."></a>My feeling.</h2><p>This cloud experience explained why Amazon stock price soars. As IBMer, I see everything from AWS familiar, but everything is slightly different. The No-SQL DB from data structure wise is not much new to the “hierarchical database” IMS from IBM, which was running since 1970s, and it still runs many of the most important systems in the world, Banks, Government, Stock Exchange you name it. The IAM, which IBM have solution with exact same name based on Tivoli Directory Server. Are all these AWS services new wheels? No, there are definitely something new with these AWS services – openness and easiness. I can’t imaging anyone can finish a hello word application based on IBM traditional products in 15 minutes. That’s the time for downloading the tool. Sorry, you need half story point for that? OK, you got your half story point. Young might 1 story point for installation, 2 story points to read document(which you don’t know where you can find it yet, if you can’t you might try Google it.) and 1 for coding, 1 for testing. AH you’ve got your plan for the week, and slightly overloaded! But in AWS case, it’s cloud based, you don’t need install, you don’t even need any configuration ( it scales automatically), It provide SDK for most popular languages(Java, Javascript, Python, you name it), It has well prepared tutorials to demonstrate the key features. </p>
-<p>Another major difference I see from AWS services is that it focus on providing most fundamental feature per service, rather than include everything in one solution or product. Which actually simplified the service it provides and the usage of it. It does not have complex configuration or tuning parameters that you need to know. Well, it might be still complex at their back-end, but from user perspective it’s simple. We could say in the IBM-era, by providing IBM complex product and IBM specialist together, IBM still provide customer great experience with simplicity, as long as customer pay the bills. Then what is the core difference? I would say in IBM-era, IT were treated as high-tech, it’s something new, that requires specialist. But in Cloud-era, IT is mandatory for any organization, and it’s a utility that need be simple enough for non-specialist. Imagine electricity, you don’t need to have a generator at home, or hire someone to change light bulb for you. Also financially Cloud bases services are charged by usage, which means the initial investment are very limited, so you can avoid the risk of huge investment on some wrong decision.</p>
-<p>Does this mean the traditional IBM businesses will die, you don’t need a specialist anymore? I don’t think so, many of the cloud based services does not have all the features of traditional product, because of it’s nature of simplicity(you can argue that the features can be improved, but that will make it like big fat product again), so there will always be needs for specialist, but the criteria become higher. In the past, if someone knows how to install MQ, and setup a QMGR with some queues, or knows how to read/put messages from/into MQ, then you might be considered as a MQ specialist. But now,  knowing how to create a queue and read/put message from/into queues from AWS, is just 15 minutes job, that’s not something qualify you as specialist. You need to be someone knows how to utilize the messaging mechanism to build up your application, design your messaging infrastructure so it’s HAHP, secure your message, etc.</p>
-<p>Company like IBM might lost some of it’s business, but she is working one exploring new business. Just like the selling of her PC and X86 server business. The logic IBM makes money is to find an area that no-body else knows but everybody wants, and ask for a staggering price. It has not been changed yet, and same logic applied by many of successful companies in the world. But still there are companies like Costco, Amazon, MI pursuing low GP form their operations, which are also great companies. Which style will last longer? I don’t know.</p>
+<p>Another major difference I see from AWS services is that it focus on providing most fundamental feature per service, rather than include everything in one solution or product. Which actually simplified the service it provides and the usage of it. It does not have complex configuration or tuning parameters that you need to know. Well, it might be still complex at their back-end, but from user perspective it’s simple. We could say in the IBM-era, by providing IBM complex product and IBM specialist together, IBM still provide customer great experience with simplicity, as long as customer pay the bills. Then what is the core difference? I would say in IBM-era, IT were treated as high-tech, it’s something new, that requires specialist. But in Cloud-era, IT is mandatory for any organization, and it’s a utility that need be simple enough for non-specialist. Imagine electricity, you don’t need to have a generator at home, or hire someone to change light bulb for you. Also financially Cloud bases services are charged by usage, which means the initial investment could be very limited, so you can avoid the risk of huge investment on some wrong decision.</p>
+<p>Does this mean the traditional IBM businesses will die, you don’t need a specialist anymore? I don’t think so, many of the cloud based services does not have all the features of traditional product, because of it’s nature of simplicity(you can argue that the features can be improved, but that will make it like big fat product again), so there will always be needs for specialist, but the criteria become higher. In the past, if someone knows how to install MQ, and setup a QMGR with some queues, or knows how to read/put messages from/into MQ, then you might be considered as a MQ specialist. But now,  knowing how to create a queue and read/put message from/into queues from AWS, is just 15 minutes job, that’s not something qualify you as specialist. You need to be someone knows how to utilize the messaging mechanism to build up your application, design your messaging infrastructure so it’s HAHP, secure your message, etc. to be a messaging specialist.</p>
+<p>Company like IBM might lost some of it’s business, but she is working one exploring new business. Just like the selling of her PC and X86 server business. The logic IBM makes money is to find an area that no-body else knows but everybody wants, and ask for a staggering price. It has not been changed yet, and same logic applied by many of successful companies in the world, like apple. But still there are companies like Costco, Amazon, MI pursuing low GP form their operations, which are also great companies. Which style will last longer? I don’t know.</p>
 <h2 id="Important-Notes"><a href="#Important-Notes" class="headerlink" title="Important Notes"></a>Important Notes</h2><p>After finishing this article, I thought about trying to run the application as part of my github pages site. So I pushed the tutorial code with my access key hard-coded to GIT. I found it did not work as expected, when I login to my AWS console, I found the user I created was delete, and a new user and group was created. My feeling is there might be some one hooked git hub pages and added some behavior to access your AWS account based on the hard coded keys. So, PLEASE ONLY RUN YOUR EXAMPLE WITH ACCESS KEY HARD CODED IN YOUR LOCAL MACHINE.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjn8qpzw10001awvoy5yo40n9" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjn8qv1340000oovogtb5mo5z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -153,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjn8qpzvs0000awvo6hyje962" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjn8qv13n0002oovos1taas7u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -217,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjn8qpzw50002awvoz1ovhhes" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjn8qv13i0001oovonk9my1dk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -274,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn8qpzw80003awvosilt9tw2" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjn8qv13r0003oovo8on1f291" class="article-share-link">Share</a>
       
       
     </footer>
@@ -322,7 +322,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn8qpzwb0004awvoxgnqzhbd" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjn8qv13v0004oovos9f0j3cx" class="article-share-link">Share</a>
       
       
     </footer>
