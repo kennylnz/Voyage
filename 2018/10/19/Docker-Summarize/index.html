@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Docker Summarize | Voyage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Docker Summarize Spent some time this week play with docker, the overall experience really amazed me by the simplicity to use, and reliability so far. Let me make a summarize on my understanding. What">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Summarize">
+<meta property="og:url" content="https://kennylnz.github.io/2018/10/19/Docker-Summarize/index.html">
+<meta property="og:site_name" content="Voyage">
+<meta property="og:description" content="Docker Summarize Spent some time this week play with docker, the overall experience really amazed me by the simplicity to use, and reliability so far. Let me make a summarize on my understanding. What">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-19T11:00:51.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker Summarize">
+<meta name="twitter:description" content="Docker Summarize Spent some time this week play with docker, the overall experience really amazed me by the simplicity to use, and reliability so far. Let me make a summarize on my understanding. What">
+  
+    <link rel="alternate" href="/Voyage/atom.xml" title="Voyage" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/Voyage/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/Voyage/" id="logo">Voyage</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/Voyage/">Home</a>
+        
+          <a class="main-nav-link" href="/Voyage/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/Voyage/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kennylnz.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Docker-Summarize" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Voyage/2018/10/19/Docker-Summarize/" class="article-date">
+  <time datetime="2018-10-19T09:11:49.000Z" itemprop="datePublished">2018-10-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker Summarize
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Docker Summarize</p>
+<p>Spent some time this week play with docker, the overall experience really amazed me by the simplicity to use, and reliability so far. Let me make a summarize on my understanding.</p>
+<h2 id="What-problem-it-solves"><a href="#What-problem-it-solves" class="headerlink" title="What problem it solves."></a>What problem it solves.</h2><p>There are many articles on the Internet explains what’s docker, many of them are statement like, which might be obscure to understand. I would like to simplify it as:<br>Docker helps you to build up your environment, so that you just need build it once, and able ship it to anyway, or scale up/down with least effort.</p>
+<p>Imagine you started a java web project, after coding a couple of days happily, you need to run you code. So you need do following<br>1 download a jdk, and install on your machine.<br>2 download a tomcat, and install it.<br>3 build your project as war file and deploy it to tomcat<br>4 you might need install a mysql as well.<br>5 you need create a database in mysql and run your projects ddl.</p>
+<p>You might say that you should already have jdk installed before you start coding, fine, let’s skip that. After you ran , debug , fixed your code. finally it’s ready for tester’s test.<br>You or someone in the team need repeat step 1-5 again, probably on a linux environment, which means he might run into some issues during installation, he Googled it and solved it.<br>After testing ready to hand-over to operation team to go pre-prod (or something similar), the operation team, repeated the step 1-5 again, and might still run into some issues, as the document was poorly maintained.<br>And the same happened for production.<br>And the same*x happened as the application was great success which need scale up by repeating 1-5 on more servers.</p>
+<p>And some day, when your V1.5 release deployed to production, the application crashed, due to you have adjusted one parameter of tomcat during your development, but the adjustment was not applied in production.<br>And in another day, you are working on your V2.0, some serve defect from production need be fixed, but you realized you have changed db design that you can’t test it with current environment, thus you decided to get a new machine and repeat 1-5.<br>The situation continued when V2.0 delivered to Pre-Prod, and you start working on V3.0,  that you need an environment for V2.0, one for V3.0, and you still have to keep one for V1.5 as well.</p>
+<p>You could probably see that in this case there are following challenges.<br>1 environment setup activities been repeated many times.<br>2 environment settings are not identical<br>3 you need dedicated environment for each branch that delivered.</p>
+<p>Docker is good at solving these challenges. </p>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works."></a>How it works.</h2><p>Google gives you best technical answer for this question. I will just try to describe it in language that easier to understand.<br>An environment usually consists of : OS/Middleware/DB/Application. Docker helps you to pack up these components, so you can ship to other places to run it. This still sounds not much difference to Virtual Machine. Yes, it’s similar. But you might know that any VM image can easily goes up to 10 GB, shipping it around does not sound like a good idea. With docker you don’t need to ship the VM image, you can just ship the steps that setup the environment. Well, that sounds like scripting. Yes, very similar. but docker does it slightly different with it’s “layers” of images.<br>At it’s base layer, it’s a linux OS image( could be windows as well), you can install your components in the OS image, and publish it as a new image. Then others can pull your image to run the environment elsewhere. which still looks like shipping vm image, with some difference. because the base layer it’s a Linux OS, you just need pull it once, it could be used as base for man other images. which means it reduced the amount of data been shipped.<br>Another way of doing it is, when you install your components, you can install via Dockerfile steps. Once it’s done, you can just share your Dockerfile, so anyone can build up same environment by bulid based on your docker file.</p>
+<p>It’s like the dockerfile can de-dimension a environment into a single text file.</p>
+<h2 id="How-to-use-it"><a href="#How-to-use-it" class="headerlink" title="How to use it."></a>How to use it.</h2><p>I’m leaving Google to give the technical answer, as you could fine many 15 minutes tutorial to tell how should it be used. I will focus on how to use it in real life projects. In traditional way, you install components step by step, you might create a document for it. or you might create some script for it. Both are helpful. In docker, you need to do it by coding your dockerfile step by step. Once you have finished your Dockerfile, the effort required to replicate the environment becomes very low. And you should always have consist environment.</p>
+<h2 id="What’s-the-best-practice"><a href="#What’s-the-best-practice" class="headerlink" title="What’s the best practice."></a>What’s the best practice.</h2><p>As we know docker is good at shipping and scaling your environment. It can help companies to scale the application to hundreds nodes. But not everyone works in Internet companies that build applications support millions users.  Does that mean docker is not needed for projects does not need large scale clusters? The answer is yes and no, Yes， because if you don’t have  needs of scale up, then docker does not add value to you in that aspect. But projects can still benefit from applying Docker for shipping environment , automation as well as “branching” your environment</p>
+<p>In my understanding, following principles should help when applying Docker in project.<br>1 Use docker file to build up environment. You could start your container, and install components there, and then commit your container, but this means you will need ship your image rather than much smaller docker files.<br>2 Organize your components as stacks, and plan your docker files according to the stack. the factor for defining the order in stack would be:<br>  a, dependency, components been dependent on show stay at lower layer.<br>  b, frequency of change, frequently changed components should be placed at upper layer. it wil save time when rebuilding the image.<br>  c, layers should be reasonably grouped. for example, you might have a environment consist of OS/Oracle product/Oracle Database/project DDL/project initial data.  it might be good to group them to [os/oracle product, oracle db, project ddl/initial data], each of the group has a image, and it’s built from previous group.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>Docker image for Oracle product : sath89/oracle-12c,  you can pull it from docker hub, it contains oracle product, and an entry script that can create oracle db and start instance.<br>Docker file for DB layer image:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">FROM sath89/oracle-12c:latest</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">COPY *.sh /</span><br><span class="line">RUN /createInstance.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set entrypoint to run management script</span></span><br><span class="line">ENTRYPOINT [<span class="string">"/entrypoint.sh"</span>]</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>The file copy the createInstance.sh script into the base image and run it to create db. Once completed, the updated image is saved as a new image. </p>
+<p>Dockerfile for application level artifacts:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FROM oracle_instance:0.1</span><br><span class="line">ENV IMPORT_FROM_VOLUME=<span class="literal">true</span></span><br><span class="line">COPY c360 /docker-entrypoint-initdb.d/</span><br><span class="line">RUN /startInstance.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set entrypoint to run management script</span></span><br><span class="line">ENTRYPOINT [<span class="string">"/entrypoint.sh"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>This docker file start db instance and run the ddl at for application. ddl should be placed in /docker-entrypoint-initdb.d/.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kennylnz.github.io/2018/10/19/Docker-Summarize/" data-id="cjnfwm3eu00006gvolhnurs9b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Voyage/2018/10/14/Access-DynamoDB-from-Browser/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Access DynamoDB from Browser</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/Voyage/archives/2018/10/">October 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Voyage/2018/10/19/Docker-Summarize/">Docker Summarize</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/14/Access-DynamoDB-from-Browser/">Access DynamoDB from Browser</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/">Dockerize Spark 2.3.2 + Hadoop 2.7.1</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/">Dockerize Mongo and Nodejs</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/11/Principles/">Principles</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Kenny Liu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/Voyage/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Voyage/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/Voyage/fancybox/jquery.fancybox.css">
+  <script src="/Voyage/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/Voyage/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
