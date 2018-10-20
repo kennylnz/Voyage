@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Docker Notes | Voyage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="So far all the articles of Voyage are docker related, before move to next components, I’d like to note down the issues I met these days, as a close to the Docker chapter. Mapping of Volume in windows.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Notes">
+<meta property="og:url" content="https://kennylnz.github.io/2018/10/20/Docker-Notes/index.html">
+<meta property="og:site_name" content="Voyage">
+<meta property="og:description" content="So far all the articles of Voyage are docker related, before move to next components, I’d like to note down the issues I met these days, as a close to the Docker chapter. Mapping of Volume in windows.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-20T05:58:41.440Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker Notes">
+<meta name="twitter:description" content="So far all the articles of Voyage are docker related, before move to next components, I’d like to note down the issues I met these days, as a close to the Docker chapter. Mapping of Volume in windows.">
+  
+    <link rel="alternate" href="/Voyage/atom.xml" title="Voyage" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/Voyage/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/Voyage/" id="logo">Voyage</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/Voyage/">Home</a>
+        
+          <a class="main-nav-link" href="/Voyage/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/Voyage/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kennylnz.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Docker-Notes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Voyage/2018/10/20/Docker-Notes/" class="article-date">
+  <time datetime="2018-10-20T04:43:37.000Z" itemprop="datePublished">2018-10-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker Notes
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>So far all the articles of Voyage are docker related, before move to next components, I’d like to note down the issues I met these days, as a close to the Docker chapter.</p>
+<h2 id="Mapping-of-Volume-in-windows"><a href="#Mapping-of-Volume-in-windows" class="headerlink" title="Mapping of Volume in windows."></a>Mapping of Volume in windows.</h2><p>It turns out when you run docker in windows, and your container is Linux, you will encounter access issue when container r/w on the mapped volume(seems only apply to NTFS). Solution could be:<br>1 Add a new partition in your windows in non-NTFS format, and map from there.<br>2 Run Docker in linux image.<br>3 Run Windows container.</p>
+<h2 id="Files-could-not-be-removed"><a href="#Files-could-not-be-removed" class="headerlink" title="Files could not be removed."></a>Files could not be removed.</h2><p>It seems due to Docker’s image layer mechanism, you can’t remove files created in lower layer in higher layers during image build. Although everything looks fine during image build, the file will come back when you start container from the image. Solution could be:<br>1 if you have temp file during your image build, put all the step in one single line, for example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line"></span><br><span class="line">COPY install.zip /usr/<span class="built_in">local</span>/install</span><br><span class="line">RUN unzip install.zip \</span><br><span class="line">  &amp;&amp; install/install.sh\</span><br><span class="line">  &amp;&amp; rm -Rf install</span><br></pre></td></tr></table></figure></p>
+<p>The unzipped files will be used to install, and last step of the run will remove the unzipped files.  And you might aware that the install.zip you will not able to remove. This actually becomes a principle when you orchestrate your docker file, each step in docker file should be an atomic operation that add extra valuable layer to the image(technically you could have your docker file perform one command per step, but that will likely make your image a mess).</p>
+<h2 id="Container-Disk-full"><a href="#Container-Disk-full" class="headerlink" title="Container Disk full"></a>Container Disk full</h2><p>I installed docker toolkit in a win7, which actually runs a Linux virtual machine, and runs docker container within that machine. it turns out the default VM machine created by toolkit only has 20GB disk space. When you have big images like oracle db, or you built many images, you will run out of disk space for the docker machine.  As the disk space within the container actually rely one this disk as well, your container will be impacted as well. You have 2 options to solve this problem.<br>1 Manually create your docker machine with parameter –virtualbox-disk-size followed by a size in mb.  you will need rebuild all your images if you still have your docker file.<br>2 Resize the default docker machine disk by first resize the VM disk file, and then expand the mount point by GParted(try Google for detailed steps).</p>
+<p>It looks like option 2 might be more helpful.</p>
+<h2 id="Docker-image-and-docker-container"><a href="#Docker-image-and-docker-container" class="headerlink" title="Docker image and docker container."></a>Docker image and docker container.</h2><p>We know that image is static file, while container is a running machine. Sometimes it might be confusing when you plan to build your docker image that requires a running software instance. Imagine you have a oracle image have oracle product installed. and what you need to do are:<br>1 create a oracle database.<br>2 run some DDL to initialize your project tables.<br>but to perform step 2 you need a running oracle instance, which means you might need run your container to have a running instance. You can then run your DDL, but that is not part of your  image build based on Dockerfile. You could commit your container as a new image. but then your image build process is a little bit complex(or looks not so ell organized). </p>
+<p>The option that I figure out is that in your Dockerfile you could start your oracle instance and then run your DDL (in one step of dockerfile). You might say that ultimately it’s the same, you start a instance and run DDL, then same it as new image, which is actually right. the only difference is I see is you could sort out your image build in single docker file with this approach.  Otherwise you wil need a shell/bat script that 1 start docker container, 2 run DDL  3 commit container as image, while you might still need Dockerfile to perform some other steps.</p>
+<h2 id="NAT-setting-when-run-docker-in-win7"><a href="#NAT-setting-when-run-docker-in-win7" class="headerlink" title="NAT setting when run docker in win7."></a>NAT setting when run docker in win7.</h2><p>I started play with docker in my laptop, which is a win10 machine. The docker process runs directly in win10. the -p command line parameter works perfectly. But when I shipped my Dockerfile to my win7 workstation, which runs docker within a VM created by docker-toolkit. the -p parameter for port forwarding did not work. The reason is that as the docker process was ran within the Linux VM created by docker-toolkit, the port forwarding actually means forward the package reached the VM to the container. what you still need to do is to enable the port forwarding in the virtual-box VM settings (I see the VM’s NIC was set as NAT by default, did not try to change to other), it’s pretty straight forward. and take effect right after the change applied.</p>
+<h2 id="Might-need-add-some-waits-between-steps"><a href="#Might-need-add-some-waits-between-steps" class="headerlink" title="Might need add some waits between steps."></a>Might need add some waits between steps.</h2><p>Due to the idea of starting oracle(or some middle-ware) and apply DDL ( or deploy a ear) in the Dockerfile steps. Sometimes when the script started instance, the instance is actually not fully ready for use, your followed step of deploying might fail(So far this happened to middle-ware a lot, did not happen to oracle during my tests). So some waits after middle-ware instances started might be needed. </p>
+<h2 id="Unresolved-issues"><a href="#Unresolved-issues" class="headerlink" title="Unresolved issues."></a>Unresolved issues.</h2><p>1 Oracle image build steps is very slow, it seems caused by the poor I/O performance.<br>2 When I tuning the Dockerfile, I need run build a lot of times, this caused a lot of untagged images. Still haven’t figured out how to avoid it.  same happens to containers as well.<br>3 Haven’t actually tried volume mapping, was trying to avoid using it, turns out so far it’s not needed.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kennylnz.github.io/2018/10/20/Docker-Notes/" data-id="cjnh190mb0000vgvo7p9129wj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Voyage/2018/10/19/Docker-Summarize/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Docker Summarize</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/Voyage/archives/2018/10/">October 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Voyage/2018/10/20/Docker-Notes/">Docker Notes</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/19/Docker-Summarize/">Docker Summarize</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/14/Access-DynamoDB-from-Browser/">Access DynamoDB from Browser</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/">Dockerize Spark 2.3.2 + Hadoop 2.7.1</a>
+          </li>
+        
+          <li>
+            <a href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/">Dockerize Mongo and Nodejs</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Kenny Liu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/Voyage/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Voyage/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/Voyage/fancybox/jquery.fancybox.css">
+  <script src="/Voyage/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/Voyage/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
