@@ -94,12 +94,12 @@
 <p>The option that I figure out is that in your Dockerfile you could start your oracle instance and then run your DDL (in one step of dockerfile). You might say that ultimately it’s the same, you start a instance and run DDL, then save it as new image, which is actually right. the only difference is I see is you could sort out your image build in single docker file with this approach.  Otherwise you will need a shell/bat script that 1 start docker container, 2 run DDL,  3 commit container as image, while you might still need Dockerfile to perform some other steps.</p>
 <h2 id="NAT-setting-when-run-docker-in-win7"><a href="#NAT-setting-when-run-docker-in-win7" class="headerlink" title="NAT setting when run docker in win7."></a>NAT setting when run docker in win7.</h2><p>I started play with docker in my laptop, which is a win10 machine. The docker process runs directly in win10. the -p command line parameter works perfectly. But when I shipped my Dockerfile to my win7 workstation, which runs docker within a VM created by docker-toolkit. The -p parameter for port forwarding did not work. The reason is that as the docker process was ran within the Linux VM created by docker-toolkit, the port forwarding actually means forward the package reached the VM to the container. What you still need to do is to enable the port forwarding in the virtual-box VM settings (I see the VM’s NIC was set as NAT by default, did not try to change to other), so that package reached your host get forwarded to your VM machine. The setting is pretty straight forward in the VirtualBox settings, and effect right after the change applied.</p>
 <h2 id="Might-need-add-some-waits-between-steps"><a href="#Might-need-add-some-waits-between-steps" class="headerlink" title="Might need add some waits between steps."></a>Might need add some waits between steps.</h2><p>Due to the idea of starting oracle(or some middle-ware) and apply DDL ( or deploy a ear) in the Dockerfile steps. Sometimes when the script started instance, the instance is actually not fully ready for use, your followed step of deploying might fail(So far this happened to middle-ware a lot, did not happen to oracle during my tests). So some waits after middle-ware instances started might be needed. </p>
-<h2 id="Unresolved-issues"><a href="#Unresolved-issues" class="headerlink" title="Unresolved issues."></a>Unresolved issues.</h2><p>1 Oracle image build steps is very slow, it seems caused by the poor I/O performance.<br>2 When I tuning the Dockerfile, I need run build a lot of times, this caused a lot of untagged images. Still haven’t figured out how to avoid it.  same happens to containers as well.<br>3 Haven’t actually tried volume mapping, was trying to avoid using it, turns out so far it’s not needed.</p>
+<h2 id="Unresolved-issues"><a href="#Unresolved-issues" class="headerlink" title="Unresolved issues."></a>Unresolved issues.</h2><p>1 Oracle image build steps is very slow, it seems caused by the poor I/O performance.<br>2 When I tuning the Dockerfile, I need build a lot of times, this caused a lot of untagged images, requires manual clean. Still haven’t figured out how to avoid it. Same happens to containers as well.<br>3 Haven’t actually tried volume mapping, was trying to avoid using it, turns out so far it’s not needed.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/20/Docker-Notes/" data-id="cjnh1d3jj00009wvo6hve2dpr" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/20/Docker-Notes/" data-id="cjnh1izs40001sgvol2eiwd3p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -152,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/19/Docker-Summarize/" data-id="cjnh1d3k000029wvowuquqa6o" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/19/Docker-Summarize/" data-id="cjnh1izs80002sgvopsv6ezgc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -202,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjnh1d3jv00019wvoz8nhut8j" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjnh1izrr0000sgvosdrja11h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -253,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjnh1d3kc00059wvo7ety8i8o" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjnh1izse0004sgvojouluecp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -317,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjnh1d3k300039wvootys99o0" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjnh1izsb0003sgvoj5qo4vl3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -374,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjnh1d3k600049wvoj9wwwwro" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjnh1izsk0006sgvo2w8fv6g8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -422,7 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjnh1d3kh00069wvo9uxfguzw" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjnh1izsh0005sgvoh1w0dac3" class="article-share-link">Share</a>
       
       
     </footer>
