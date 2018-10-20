@@ -90,16 +90,16 @@
 <p>The unzipped files will be used to install, and last step of the run will remove the unzipped files.  And you might aware that the install.zip you will not able to remove. This actually becomes a principle when you orchestrate your docker file, each step in docker file should be an atomic operation that add extra valuable layer to the image(technically you could have your docker file perform one command per step, but that will likely make your image a mess).</p>
 <h2 id="Container-Disk-full"><a href="#Container-Disk-full" class="headerlink" title="Container Disk full"></a>Container Disk full</h2><p>I installed docker toolkit in a win7, which actually runs a Linux virtual machine, and runs docker container within that machine. it turns out the default VM machine created by toolkit only has 20GB disk space. When you have big images like oracle db, or you built many images, you will run out of disk space for the docker machine.  As the disk space within the container actually rely one this disk as well, your container will be impacted as well. You have 2 options to solve this problem.<br>1 Manually create your docker machine with parameter –virtualbox-disk-size followed by a size in mb.  you will need rebuild all your images if you still have your docker file.<br>2 Resize the default docker machine disk by first resize the VM disk file, and then expand the mount point by GParted(try Google for detailed steps).</p>
 <p>It looks like option 2 might be more helpful.</p>
-<h2 id="Docker-image-and-docker-container"><a href="#Docker-image-and-docker-container" class="headerlink" title="Docker image and docker container."></a>Docker image and docker container.</h2><p>We know that image is static file, while container is a running machine. Sometimes it might be confusing when you plan to build your docker image that requires a running software instance. Imagine you have a oracle image have oracle product installed. and what you need to do are:<br>1 create a oracle database.<br>2 run some DDL to initialize your project tables.<br>but to perform step 2 you need a running oracle instance, which means you might need run your container to have a running instance. You can then run your DDL, but that is not part of your  image build based on Dockerfile. You could commit your container as a new image. but then your image build process is a little bit complex(or looks not so ell organized). </p>
-<p>The option that I figure out is that in your Dockerfile you could start your oracle instance and then run your DDL (in one step of dockerfile). You might say that ultimately it’s the same, you start a instance and run DDL, then same it as new image, which is actually right. the only difference is I see is you could sort out your image build in single docker file with this approach.  Otherwise you wil need a shell/bat script that 1 start docker container, 2 run DDL  3 commit container as image, while you might still need Dockerfile to perform some other steps.</p>
-<h2 id="NAT-setting-when-run-docker-in-win7"><a href="#NAT-setting-when-run-docker-in-win7" class="headerlink" title="NAT setting when run docker in win7."></a>NAT setting when run docker in win7.</h2><p>I started play with docker in my laptop, which is a win10 machine. The docker process runs directly in win10. the -p command line parameter works perfectly. But when I shipped my Dockerfile to my win7 workstation, which runs docker within a VM created by docker-toolkit. the -p parameter for port forwarding did not work. The reason is that as the docker process was ran within the Linux VM created by docker-toolkit, the port forwarding actually means forward the package reached the VM to the container. what you still need to do is to enable the port forwarding in the virtual-box VM settings (I see the VM’s NIC was set as NAT by default, did not try to change to other), it’s pretty straight forward. and take effect right after the change applied.</p>
+<h2 id="Docker-image-and-docker-container"><a href="#Docker-image-and-docker-container" class="headerlink" title="Docker image and docker container."></a>Docker image and docker container.</h2><p>We know that image is static file, while container is a running machine. Sometimes it might be confusing when you plan to build your docker image that requires a running software instance. Imagine you have a oracle image have oracle product installed. and what you need to do are:<br>1 create a oracle database.<br>2 run some DDL to initialize your project tables.<br>but to perform step 2 you need a running oracle instance, which means you might need run your container to have a running instance. You can then run your DDL, but that is not part of your  image build based on Dockerfile. You could commit your container as a new image. but then your image build process is a little bit complex(or looks not so well organized). </p>
+<p>The option that I figure out is that in your Dockerfile you could start your oracle instance and then run your DDL (in one step of dockerfile). You might say that ultimately it’s the same, you start a instance and run DDL, then save it as new image, which is actually right. the only difference is I see is you could sort out your image build in single docker file with this approach.  Otherwise you will need a shell/bat script that 1 start docker container, 2 run DDL,  3 commit container as image, while you might still need Dockerfile to perform some other steps.</p>
+<h2 id="NAT-setting-when-run-docker-in-win7"><a href="#NAT-setting-when-run-docker-in-win7" class="headerlink" title="NAT setting when run docker in win7."></a>NAT setting when run docker in win7.</h2><p>I started play with docker in my laptop, which is a win10 machine. The docker process runs directly in win10. the -p command line parameter works perfectly. But when I shipped my Dockerfile to my win7 workstation, which runs docker within a VM created by docker-toolkit. The -p parameter for port forwarding did not work. The reason is that as the docker process was ran within the Linux VM created by docker-toolkit, the port forwarding actually means forward the package reached the VM to the container. What you still need to do is to enable the port forwarding in the virtual-box VM settings (I see the VM’s NIC was set as NAT by default, did not try to change to other), so that package reached your host get forwarded to your VM machine. The setting is pretty straight forward in the VirtualBox settings, and effect right after the change applied.</p>
 <h2 id="Might-need-add-some-waits-between-steps"><a href="#Might-need-add-some-waits-between-steps" class="headerlink" title="Might need add some waits between steps."></a>Might need add some waits between steps.</h2><p>Due to the idea of starting oracle(or some middle-ware) and apply DDL ( or deploy a ear) in the Dockerfile steps. Sometimes when the script started instance, the instance is actually not fully ready for use, your followed step of deploying might fail(So far this happened to middle-ware a lot, did not happen to oracle during my tests). So some waits after middle-ware instances started might be needed. </p>
 <h2 id="Unresolved-issues"><a href="#Unresolved-issues" class="headerlink" title="Unresolved issues."></a>Unresolved issues.</h2><p>1 Oracle image build steps is very slow, it seems caused by the poor I/O performance.<br>2 When I tuning the Dockerfile, I need run build a lot of times, this caused a lot of untagged images. Still haven’t figured out how to avoid it.  same happens to containers as well.<br>3 Haven’t actually tried volume mapping, was trying to avoid using it, turns out so far it’s not needed.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/20/Docker-Notes/" data-id="cjnh190mb0000vgvo7p9129wj" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/20/Docker-Notes/" data-id="cjnh1d3jj00009wvo6hve2dpr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -152,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/19/Docker-Summarize/" data-id="cjnh190nv0006vgvomzhw5nd6" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/19/Docker-Summarize/" data-id="cjnh1d3k000029wvowuquqa6o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -202,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjnh190mw0001vgvobgp88euw" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/14/Access-DynamoDB-from-Browser/" data-id="cjnh1d3jv00019wvoz8nhut8j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -253,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjnh190nh0003vgvoqe9mr7ay" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/13/Dockerize-Spark-2-3-2-Hadoop-2-7-1/" data-id="cjnh1d3kc00059wvo7ety8i8o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -317,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjnh190no0004vgvomk7m5r0p" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Dockerize-Mongo-and-Nodejs/" data-id="cjnh1d3k300039wvootys99o0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -374,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjnh190nq0005vgvo6qh7smm1" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjnh1d3k600049wvoj9wwwwro" class="article-share-link">Share</a>
       
       
     </footer>
@@ -422,7 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjnh190n90002vgvo5ymabote" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/11/Voyage-Home/" data-id="cjnh1d3kh00069wvo9uxfguzw" class="article-share-link">Share</a>
       
       
     </footer>
