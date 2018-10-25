@@ -5,19 +5,19 @@
   
 
   
-  <title>Principles | Voyage</title>
+  <title>VPN to enable access to your desktop at home from office | Voyage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Principles for the Voyage programme As the idea of Voyage is to learn and practice a bunch of technics and write notes about it, it’s better to have some principles amount all the practice and article">
+  <meta name="description" content="This is a quick note for how I sort out connection to my desktop at home from office.The needs of connecting your desktop from office or anyway is a valid for many IT guys.  There are many options, yo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Principles">
-<meta property="og:url" content="https://kennylnz.github.io/2018/10/11/Principles/index.html">
+<meta property="og:title" content="VPN to enable access to your desktop at home from office">
+<meta property="og:url" content="https://kennylnz.github.io/2018/10/25/VPN-to-enable-access-to-your-desktop-at-home-from-office/index.html">
 <meta property="og:site_name" content="Voyage">
-<meta property="og:description" content="Principles for the Voyage programme As the idea of Voyage is to learn and practice a bunch of technics and write notes about it, it’s better to have some principles amount all the practice and article">
+<meta property="og:description" content="This is a quick note for how I sort out connection to my desktop at home from office.The needs of connecting your desktop from office or anyway is a valid for many IT guys.  There are many options, yo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-11T09:38:18.957Z">
+<meta property="og:updated_time" content="2018-10-25T08:25:39.146Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Principles">
-<meta name="twitter:description" content="Principles for the Voyage programme As the idea of Voyage is to learn and practice a bunch of technics and write notes about it, it’s better to have some principles amount all the practice and article">
+<meta name="twitter:title" content="VPN to enable access to your desktop at home from office">
+<meta name="twitter:description" content="This is a quick note for how I sort out connection to my desktop at home from office.The needs of connecting your desktop from office or anyway is a valid for many IT guys.  There are many options, yo">
   
     <link rel="alternate" href="/Voyage/atom.xml" title="Voyage" type="application/atom+xml">
   
@@ -64,10 +64,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Principles" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-VPN-to-enable-access-to-your-desktop-at-home-from-office" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/Voyage/2018/10/11/Principles/" class="article-date">
-  <time datetime="2018-10-11T09:37:14.000Z" itemprop="datePublished">2018-10-11</time>
+    <a href="/Voyage/2018/10/25/VPN-to-enable-access-to-your-desktop-at-home-from-office/" class="article-date">
+  <time datetime="2018-10-25T08:06:46.000Z" itemprop="datePublished">2018-10-25</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Principles
+      VPN to enable access to your desktop at home from office
     </h1>
   
 
@@ -86,32 +86,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Principles for the Voyage programme</p>
-<p>As the idea of Voyage is to learn and practice a bunch of technics and write notes about it, it’s better to have some principles amount all the practice and articles, so they serve the same purpose under the programme.</p>
-<p>I have come with a general purpose of the whole programme that it helps me to gain in-depth (enough) understanding of the technics. If possible it should also help anyone who reads the articles as well.</p>
-<p>Some common challenges when you start learning at new technics are:</p>
-<p>1 It might easy to understand the general idea of the new technics, but not in-depth enough for you to start using it in projects.</p>
-<p>2 the best way to solve the point one is to practice, but it actually brings an even bigger challenge, to sort out the environment and make it work as told by many 15 minutes tutorials from the internet.</p>
-<p>3 Many tutorials from the internet were based on a certain environment and certain version of tools, which makes the tutorial not workable after a couple of years.</p>
-<p>4 Information got from the internet about new technics are small pieces, sometimes it will just a few lines of commands or code, without telling why. Which you don’t really learn from it, you barely solved an incident with a workaround, if you are lucky enough that found the piece you need.</p>
-<p>….</p>
-<p>N, You need to go fishing this weekend, and need prepare the tackle tonight.</p>
-<p>N+1, Your 10-year-old machine just doesn’t work for the gigantic software.</p>
-<p>There could be a hundred reason that you gave up or stopped before you really learnt the truth of a certain technic.</p>
-<p>To help myself and potential readers to embrace the challenges, I came up with following principles for the programme.</p>
-<p>Practice perspective:</p>
-<p>1 Make the practice have least dependent on environment, by adopting any possible means like virtualizing, containerizing, scripting…</p>
-<p>2 Address most core concept and component only, with reasonable enough depth.</p>
-<p>3 Examples should be runnable within 30 minutes.</p>
-<p>Article perspective:</p>
-<p>1 Only cover one main component in each article.</p>
-<p>2 Maximize the life of the content of the article.</p>
-<p>3 Keep improving the English language, so the article is short but clear.</p>
+        <p>This is a quick note for how I sort out connection to my desktop at home from office.<br>The needs of connecting your desktop from office or anyway is a valid for many IT guys.  There are many options, you might need use one suit your needs.<br>1 NAT thru your home router. Usually, you have a modem/router at home to connect to Internet. The modem will get a public IP address each time. What you need to do is setup a NAT port forwarding from the public ip to you desktop IP. Although you can hardly get a static public IP, as its from a pool managed by your broadband provider, there are options to map your domain dynamically to the dynamic ip you got each time. This is not a bad option, as it’s almost free.</p>
+<p>2 Setup VPN server, and connect your desktop to the vpn server. It could be L2TP vpn server, or it could be OpenVPN server. both available from AWS cloud market place. </p>
+<h2 id="L2TP"><a href="#L2TP" class="headerlink" title="L2TP"></a>L2TP</h2><p>L2TP is a protocol, so it’s widely supported, all operating system, mobile deives, So I decided to start with this one.<br>L2TP one was very friendly to windows machine, almost no complex settings, just get the necessary credentials and keys and set in windows VPN connection.<br>But my Desktop is a Unbuntu 18.04, actually there are a few posts tell how to setup L2TP connections, but unfortunately none of them suite Unbuntu 18.04, easy enough. Thus I gave up L2TP.</p>
+<h2 id="OpenVPN"><a href="#OpenVPN" class="headerlink" title="OpenVPN"></a>OpenVPN</h2><p>OpenVpn instance requires some configurations during initialize, you need login to the EC2 instance. After that you can config from web UI. Couple of notes for my configurations.<br>1 static ip for certain user, which is needed for the desktop machine,  this requires set a IP pool for static IPs first, it’s under VPN Settings, and then specify static ip for user under User Permissions.<br>2 you need  manage the ACL per user, to specify the access to and access from to ensure the your laptop/mobile connection have access to your desktop (suppose to use static ip).<br>3 start vpn connection as service in linux, first you need enable auto-login for the user used by your desktop machine, and download the profile to linux machine.<br>  in ubuntu, you need use systemctl to start the openvpn service.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kennylnz.github.io/2018/10/11/Principles/" data-id="cjnobp5z200034cvodag5bxdj" class="article-share-link">Share</a>
+      <a data-url="https://kennylnz.github.io/2018/10/25/VPN-to-enable-access-to-your-desktop-at-home-from-office/" data-id="cjnobp5zd00054cvox2yqoxg6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -120,19 +103,10 @@
     
 <nav id="article-nav">
   
-    <a href="/Voyage/2018/10/11/Dockerize-Mongo-and-Nodejs/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Dockerize Mongo and Nodejs
-        
-      </div>
-    </a>
   
-  
-    <a href="/Voyage/2018/10/11/Voyage-Home/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/Voyage/2018/10/20/Docker-Notes/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Voyage Home</div>
+      <div class="article-nav-title">Docker Notes</div>
     </a>
   
 </nav>
